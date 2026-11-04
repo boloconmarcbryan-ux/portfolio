@@ -830,6 +830,8 @@ const VIDEOS = {
     { file: "meta-5", drive: "11xcBOzAP_aMHb4_JawKjnqKgFkUR0ST1" }
   ],
   ai: [
+    { file: "ai-song-1", drive: "" },
+    { file: "ai-song-2", drive: "" },
     { file: "ai-1", drive: "1Re24c_dZY9VIl5Pi4BhQrDmQMgZVYBmo" },
     { file: "ai-glowie-fi", drive: "1lkagrDM3_4HlGHE4bUCVzPVwWQiNI4Iw" },
     { file: "ai-little-old", drive: "1-B3QQQZdFErZEgYjG5JSQsHM2e6TVXze" },
@@ -1186,7 +1188,7 @@ function buildCarousel(root){
     b.innerHTML = '<div class="ph"></div><img alt="" loading="lazy" decoding="async" src="' + posterSrc(v) + '"><span class="play">' + playSvg + '</span><span class="meter" aria-hidden="true"><i></i></span>';
     var img = $("img", b);
     img.addEventListener("error", function onErr(){
-      img.removeEventListener("error", onErr); img.referrerPolicy = "no-referrer"; img.src = thumb(v);
+      img.removeEventListener("error", onErr); if (!v.drive){ img.remove(); return; } img.referrerPolicy = "no-referrer"; img.src = thumb(v);
       img.addEventListener("error", function(){ img.remove(); });
     });
     b.addEventListener("click", function(){
@@ -1260,7 +1262,7 @@ function buildCarousel(root){
     vid.poster = posterSrc(v);
     vid.src = MEDIA + v.file + ".mp4";
     vid.addEventListener("error", function(){
-      if (!vid.parentNode) return;
+      if (!vid.parentNode || !v.drive) return;
       var f = document.createElement("iframe");
       f.src = "https://drive.google.com/file/d/" + v.drive + "/preview";
       f.allow = "autoplay; fullscreen"; f.allowFullscreen = true; f.title = "Video player";
