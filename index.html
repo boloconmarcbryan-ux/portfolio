@@ -116,7 +116,8 @@ h1 .soft{color:var(--muted)}
 .h-cta{display:flex;gap:10px;flex-wrap:wrap}
 .h-reel{grid-column:span 4;grid-row:span 2;padding:14px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;background:linear-gradient(160deg,#20202A,#16171C)}
 .reel-top{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 0}
-.reel-top .label{color:var(--ink)}
+.reel-top .label{color:var(--ink);white-space:nowrap}
+.reel-dots b{width:12px}
 .reel-top .label i{background:#FF6B6B;animation:pulse 2s infinite}
 .reel-dots{display:flex;gap:5px}
 .reel-dots b{width:18px;height:3px;border-radius:3px;background:var(--line2);overflow:hidden;position:relative}
@@ -349,7 +350,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     </div>
 
     <div class="stat">
-      <div class="card rv" style="--d:.1s"><b>3<small>yrs</small></b><p>Editing video, from cuts to full ad production</p></div>
+      <div class="card rv" style="--d:.1s"><b>2<small>yrs</small></b><p>Editing video, from cuts to full ad production</p></div>
       <div class="card rv" style="--d:.15s"><b>6<small>langs</small></b><p>EN, DA, NL, FI, NO and SV ads that sound native</p></div>
       <div class="card rv" style="--d:.2s"><b>EU+US</b><p>Clients in the Netherlands, Norway, Denmark and the US</p></div>
     </div>
@@ -521,6 +522,7 @@ var VIDEOS = [
   { file: "ai-5", cat: "ai", title: "AI Ad", sub: "AI-produced", drive: "1xLUKT3ZVaBI7Bsri0QLtMuvuzuFlVPaM" }
 ];
 var REEL = [
+  { file: "meta-2", title: "Parfumoir", sub: "Meta ad · Perfume lab" },
   { file: "parf-1", title: "Parfumoir", sub: "Pixar-style AI ad" },
   { file: "parf-2", title: "Parfumoir", sub: "AI mascot ad" },
   { file: "parf-3", title: "Parfumoir", sub: "AI character ad" },
