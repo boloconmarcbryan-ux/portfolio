@@ -177,9 +177,15 @@ h1 .soft{color:var(--muted)}
 .vmeta{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
 .vmeta b{font:700 15px/1.25 var(--head);letter-spacing:-.01em}
 .vmeta small{display:block;color:rgba(255,255,255,.7);font-size:12px;margin-top:2px}
-.pbtn{flex:none;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;transition:transform .25s}
-.pbtn svg{width:14px;height:14px;margin-left:2px;fill:#111}
+.pbtn{flex:none;width:38px;height:38px;border-radius:50%;background:rgba(17,18,22,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;transition:transform .25s,background .25s,color .25s}
+.pbtn svg{width:17px;height:17px}
 .vcard:hover .pbtn{transform:scale(1.1)}
+.vcard.snd{border-color:var(--lime)}
+.vcard.snd .pbtn{background:var(--lime);color:var(--on-lime)}
+.xbtn{position:absolute;top:8px;right:8px;z-index:3;width:34px;height:34px;border:0;border-radius:50%;background:rgba(17,18,22,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s}
+.xbtn:hover{background:rgba(17,18,22,.85)}
+.xbtn svg{width:15px;height:15px}
+.reel-screen{cursor:pointer}
 .vcard.hide{display:none}
 
 /* Modal player */
@@ -334,11 +340,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     </div>
 
     <div class="card h-reel rv" style="--d:.08s">
-      <div class="reel-top"><span class="label"><i aria-hidden="true"></i>Showreel</span><div class="reel-dots" id="reelDots"></div></div>
+      <div class="reel-top"><span class="label"><i aria-hidden="true"></i>Parfumoir ads</span><div class="reel-dots" id="reelDots"></div></div>
       <div class="reel-screen">
         <video id="reelVid" muted playsinline autoplay preload="auto"></video>
         <button class="sound" id="soundBtn" type="button" aria-label="Turn sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path id="sndWave" d="M22 9l-6 6M16 9l6 6"/></svg></button>
-        <div class="reel-cap"><b id="reelTitle">AI Song Ad</b><span id="reelTag">AI Ads</span></div>
+        <div class="reel-cap"><b id="reelTitle">Parfumoir</b><span id="reelTag">Tap for sound</span></div>
       </div>
     </div>
 
@@ -356,7 +362,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       <div class="rv">
         <span class="label"><i aria-hidden="true"></i>Selected work</span>
         <h2 style="margin-top:12px">Ads I've edited</h2>
-        <p>Hover to preview, tap to watch with sound. Meta performance creatives and fully AI-produced ads.</p>
+        <p>Every ad plays on its own. Tap one to hear it. Meta performance creatives and fully AI-produced ads.</p>
       </div>
       <div class="tabs rv" role="tablist" aria-label="Filter videos" id="tabs">
         <button type="button" role="tab" class="on" data-f="all" aria-selected="true">All <span id="nAll"></span></button>
@@ -514,7 +520,14 @@ var VIDEOS = [
   { file: "meta-5", cat: "meta", title: "Meta Ad", sub: "Performance creative", drive: "11xcBOzAP_aMHb4_JawKjnqKgFkUR0ST1" },
   { file: "ai-5", cat: "ai", title: "AI Ad", sub: "AI-produced", drive: "1xLUKT3ZVaBI7Bsri0QLtMuvuzuFlVPaM" }
 ];
-var REEL = ["ai-song-1", "meta-1", "ai-glowie-fi", "meta-3", "ai-song-2"];
+var REEL = [
+  { file: "parf-1", title: "Parfumoir", sub: "Pixar-style AI ad" },
+  { file: "parf-2", title: "Parfumoir", sub: "AI mascot ad" },
+  { file: "parf-3", title: "Parfumoir", sub: "AI character ad" },
+  { file: "parf-4", title: "Parfumoir", sub: "Product ad" },
+  { file: "parf-5", title: "Parfumoir", sub: "AI mascot ad" },
+  { file: "parf-6", title: "Parfumoir", sub: "UGC ad" }
+];
 var TOOLS = ["CapCut","Higgsfield","Kling","Seedance","Veo","Google Flow","HeyGen","ElevenLabs","Scripts","Storyboards"];
 var $ = function(s, r){ return (r || document).querySelector(s); };
 var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -537,49 +550,79 @@ var rv = $("#reelVid"), dots = $("#reelDots"), ri = 0;
 REEL.forEach(function(){ dots.appendChild(document.createElement("b")); });
 function playReel(i){
   ri = (i + REEL.length) % REEL.length;
-  var v = byFile[REEL[ri]];
+  var v = REEL[ri];
   rv.poster = MEDIA + v.file + ".jpg";
   rv.src = MEDIA + v.file + ".mp4";
-  $("#reelTitle").textContent = v.title; $("#reelTag").textContent = catName[v.cat];
+  $("#reelTitle").textContent = v.title; $("#reelTag").textContent = v.sub;
   var p = rv.play(); if (p && p.catch) p.catch(function(){});
   [].forEach.call(dots.children, function(d, j){ d.classList.remove("on"); void d.offsetWidth; if (j === ri) d.classList.add("on"); });
 }
 rv.addEventListener("loadedmetadata", function(){
-  var d = Math.min(rv.duration || 7, 7);
-  dots.children[ri].style.setProperty("--dur", d + "s");
+  dots.children[ri].style.setProperty("--dur", (rv.duration || 12) + "s");
 });
-rv.addEventListener("timeupdate", function(){ if (rv.muted && rv.currentTime >= 7) playReel(ri + 1); });
 rv.addEventListener("ended", function(){ playReel(ri + 1); });
 var sb = $("#soundBtn");
-sb.addEventListener("click", function(){
-  rv.muted = !rv.muted;
-  sb.setAttribute("aria-label", rv.muted ? "Turn sound on" : "Turn sound off");
-  $("#sndWave").setAttribute("d", rv.muted ? "M22 9l-6 6M16 9l6 6" : "M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13");
-  if (!rv.muted){ var p = rv.play(); if (p && p.catch) p.catch(function(){}); }
-});
-if (!reduce) playReel(0); else { rv.poster = MEDIA + REEL[0] + ".jpg"; rv.removeAttribute("autoplay"); }
+function setReelSound(on){
+  rv.muted = !on;
+  sb.setAttribute("aria-label", on ? "Turn sound off" : "Turn sound on");
+  $("#sndWave").setAttribute("d", on ? "M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" : "M22 9l-6 6M16 9l6 6");
+  if (on){ muteCards(); var p = rv.play(); if (p && p.catch) p.catch(function(){}); }
+}
+function toggleReel(e){ if (e) e.stopPropagation(); setReelSound(rv.muted); }
+sb.addEventListener("click", toggleReel);
+$(".reel-screen").addEventListener("click", toggleReel);
+playReel(0);
 
 /* Work grid */
 var grid = $("#grid"), cards = [];
-var playSvg = '<svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg>';
+var mutedSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>';
+var soundSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+var expandSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+var vids = [];
+function playSafe(el){ var p = el.play(); if (p && p.catch) p.catch(function(){}); }
+function cardState(c, on){
+  c.classList.toggle("snd", on);
+  c.querySelector(".pbtn").innerHTML = on ? soundSvg : mutedSvg;
+  c.setAttribute("aria-label", (on ? "Mute " : "Play with sound: ") + VIDEOS[cards.indexOf(c)].title);
+}
+function muteCards(except){
+  cards.forEach(function(c, j){ if (c !== except && !vids[j].muted){ vids[j].muted = true; cardState(c, false); } });
+}
 VIDEOS.forEach(function(v, i){
-  var b = document.createElement("button");
-  b.type = "button"; b.className = "vcard rv"; b.style.setProperty("--d", (i % 4) * .05 + "s");
-  b.setAttribute("aria-label", "Play " + v.title + ", " + v.sub);
+  var b = document.createElement("div");
+  b.className = "vcard rv"; b.style.setProperty("--d", (i % 4) * .05 + "s");
+  b.tabIndex = 0; b.setAttribute("role", "button");
   b.innerHTML = '<img src="' + MEDIA + v.file + '.jpg" alt="" loading="lazy" decoding="async">' +
     '<span class="tag ' + v.cat + '">' + (v.cat === "ai" ? "AI" : "Meta") + '</span>' +
-    '<span class="vmeta"><span><b>' + v.title + '</b><small>' + v.sub + '</small></span><span class="pbtn">' + playSvg + '</span></span>';
-  b.addEventListener("click", function(){ openModal(i); });
-  if (fine && !reduce){
-    var pv;
-    b.addEventListener("pointerenter", function(){
-      if (!pv){ pv = document.createElement("video"); pv.muted = true; pv.loop = true; pv.playsInline = true; pv.preload = "auto"; pv.src = MEDIA + v.file + ".mp4"; b.insertBefore(pv, b.children[1]); }
-      var p = pv.play(); if (p && p.catch) p.catch(function(){}); b.classList.add("pv");
-    });
-    b.addEventListener("pointerleave", function(){ if (pv){ pv.pause(); } b.classList.remove("pv"); });
+    '<button class="xbtn" type="button" aria-label="Open ' + v.title + ' full screen">' + expandSvg + '</button>' +
+    '<span class="vmeta"><span><b>' + v.title + '</b><small>' + v.sub + '</small></span><span class="pbtn">' + mutedSvg + '</span></span>';
+  var vid = document.createElement("video");
+  vid.muted = true; vid.loop = true; vid.playsInline = true; vid.preload = "none";
+  vid.setAttribute("muted", ""); vid.setAttribute("playsinline", ""); vid.poster = MEDIA + v.file + ".jpg";
+  b.insertBefore(vid, b.children[1]); vids.push(vid);
+  function toggle(){
+    if (!vid.src) vid.src = MEDIA + v.file + ".mp4";
+    var on = vid.muted;
+    if (on){ muteCards(b); setReelSound(false); vid.muted = false; vid.currentTime = 0; playSafe(vid); }
+    else { vid.muted = true; }
+    b.classList.add("pv"); cardState(b, on);
   }
-  grid.appendChild(b); cards.push(b);
+  b.addEventListener("click", toggle);
+  b.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle(); } });
+  b.querySelector(".xbtn").addEventListener("click", function(e){ e.stopPropagation(); muteCards(); openModal(i); });
+  grid.appendChild(b); cards.push(b); cardState(b, false);
 });
+/* Autoplay muted while on screen */
+if ("IntersectionObserver" in window){
+  var vio = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var j = cards.indexOf(e.target), vid = vids[j];
+      if (e.isIntersecting){ if (!vid.src) vid.src = MEDIA + VIDEOS[j].file + ".mp4"; e.target.classList.add("pv"); playSafe(vid); }
+      else vid.pause();
+    });
+  }, { threshold: .35 });
+  cards.forEach(function(c){ vio.observe(c); });
+}
 var cnt = function(c){ return VIDEOS.filter(function(v){ return c === "all" || v.cat === c; }).length; };
 $("#nAll").textContent = cnt("all"); $("#nMeta").textContent = cnt("meta"); $("#nAi").textContent = cnt("ai");
 var filter = "all";
@@ -615,7 +658,7 @@ function openModal(i){
 }
 function closeModal(){
   modal.classList.remove("on"); document.body.style.overflow = ""; box.innerHTML = "";
-  if (!reduce){ var p = rv.play(); if (p && p.catch) p.catch(function(){}); }
+  playSafe(rv);
   if (lastFocus) lastFocus.focus();
 }
 function step(d){ var list = visible(), pos = list.indexOf(cur); load(list[(pos + d + list.length) % list.length]); }
