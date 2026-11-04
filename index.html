@@ -344,7 +344,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     </div>
 
     <div class="card h-reel rv" style="--d:.08s">
-      <div class="reel-top"><span class="label"><i aria-hidden="true"></i>Parfumoir ads</span><div class="reel-dots" id="reelDots"></div></div>
+      <div class="reel-top"><span class="label"><i aria-hidden="true"></i>Featured ad</span><div class="reel-dots" id="reelDots"></div></div>
       <div class="reel-screen">
         <video id="reelVid" muted playsinline autoplay preload="auto"></video>
         <button class="sound" id="soundBtn" type="button" aria-label="Turn sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path id="sndWave" d="M22 9l-6 6M16 9l6 6"/></svg></button>
@@ -525,13 +525,7 @@ var VIDEOS = [
   { file: "ai-5", cat: "ai", title: "AI Ad", sub: "AI-produced", drive: "1xLUKT3ZVaBI7Bsri0QLtMuvuzuFlVPaM" }
 ];
 var REEL = [
-  { file: "meta-2", title: "Parfumoir", sub: "Meta ad · Perfume lab" },
-  { file: "parf-1", title: "Parfumoir", sub: "Pixar-style AI ad" },
-  { file: "parf-2", title: "Parfumoir", sub: "AI mascot ad" },
-  { file: "parf-3", title: "Parfumoir", sub: "AI character ad" },
-  { file: "parf-4", title: "Parfumoir", sub: "Product ad" },
-  { file: "parf-5", title: "Parfumoir", sub: "AI mascot ad" },
-  { file: "parf-6", title: "Parfumoir", sub: "UGC ad" }
+  { file: "meta-2", title: "Parfumoir", sub: "Meta ad · Perfume lab" }
 ];
 var TOOLS = ["CapCut","Higgsfield","Kling","Seedance","Veo","Google Flow","HeyGen","ElevenLabs","Scripts","Storyboards"];
 var $ = function(s, r){ return (r || document).querySelector(s); };
@@ -566,6 +560,7 @@ rv.addEventListener("loadedmetadata", function(){
   dots.children[ri].style.setProperty("--dur", (rv.duration || 12) + "s");
 });
 rv.addEventListener("ended", function(){ playReel(ri + 1); });
+if (REEL.length < 2){ rv.loop = true; dots.style.display = "none"; }
 var sb = $("#soundBtn");
 function setReelSound(on){
   rv.muted = !on;
