@@ -297,6 +297,42 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 .fab.show{transform:none}
 @media (max-width:760px){.fab{display:inline-flex}}
 
+/* ---- Upgrade 2026-11-21 (UI/UX Pro Max checklist) ---- */
+.tabs button span{color:#8F897E}            /* contrast fix: was 3.6:1 */
+.skip{position:fixed;left:16px;top:-60px;z-index:100;padding:12px 18px;background:var(--lime);color:var(--on-lime);font:600 12px var(--body);letter-spacing:.14em;text-transform:uppercase;transition:top .2s}
+.skip:focus{top:16px}
+/* Scroll progress */
+.prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;pointer-events:none;background:linear-gradient(90deg,#BF9C5E,#EBD6A6);transform-origin:left;transform:scaleX(var(--p,0))}
+/* Film grain */
+.grain{position:fixed;inset:-50%;z-index:70;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-6%,-2%)}80%{transform:translate(5%,4%)}100%{transform:translate(0,0)}}
+/* Card spotlight (mouse) */
+.card{position:relative;isolation:isolate}
+.fine .card:not(.h-main):not(.h-reel)::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .4s;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(205,174,114,.1),transparent 60%);z-index:-1}
+.fine .card:hover::before{opacity:1}
+/* Hero headline word reveal */
+.js h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.js h1 .w>span{display:inline-block;transform:translateY(105%);transition:transform 1.1s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i) * 70ms + .15s)}
+.js .loaded h1 .w>span,.js.loaded h1 .w>span{transform:none}
+/* Gold shimmer on primary buttons */
+.btn.primary{position:relative;overflow:hidden}
+.btn.primary::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);transition:left .7s cubic-bezier(.2,.8,.2,1)}
+.btn.primary:hover::after{left:130%}
+/* Video cards: slow zoom on hover */
+.vcard video,.vcard img{transition:opacity .5s,transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.vcard:hover video,.vcard:hover img{transform:scale(1.045)}
+/* Bigger touch targets on touch screens */
+@media (max-width:560px){.h-cta .btn{flex:1 1 100%}}
+@media (pointer:coarse){.xbtn{width:44px;height:44px;top:6px;right:6px}.pbtn{width:44px;height:44px}.sound{width:46px;height:46px}}
+/* Process connector */
+@media (min-width:861px){.steps{position:relative}.steps::before{content:"";position:absolute;left:30px;right:30px;top:76px;height:1px;background:linear-gradient(90deg,var(--lime),rgba(205,174,114,.1));z-index:0}.steps li{background:var(--bg)}}
+/* Back to top */
+.totop{position:fixed;right:20px;bottom:20px;z-index:44;width:46px;height:46px;border-radius:50%;border:1px solid var(--line2);background:rgba(10,10,11,.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:grid;place-items:center;color:var(--ink);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s,border-color .3s}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{border-color:var(--lime);color:var(--lime)}
+.totop svg{width:18px;height:18px}
+@media (max-width:760px){.totop{display:none}}
+
 /* Reveal */
 .js .rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
 .js .rv.in{opacity:1;transform:none}
@@ -304,11 +340,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js .rv{opacity:1;transform:none}
   html{scroll-behavior:auto}
+  .js h1 .w>span{transform:none}
+  .grain{display:none}
 }
 </style>
 <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
+<a class="skip" href="#work">Skip to work</a>
+<div class="prog" id="prog" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
   <div class="nav-in">
@@ -497,6 +538,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <footer><div class="wrap"><span>© 2026 Marc · AI &amp; Meta Ads Editor</span><span>Philippines · <span id="clock">--:--</span> GMT+8</span><a href="#top">Back to top ↑</a></div></footer>
 
+<a class="totop" id="totop" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
 <a class="fab" id="fab" href="https://wa.me/639707990330" target="_blank" rel="noopener" aria-label="Message Marc on WhatsApp"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>WhatsApp</a>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Video player">
@@ -688,6 +730,64 @@ function onScroll(){
   fab.classList.toggle("show", scrollY > 500 && $("#contact").getBoundingClientRect().top > innerHeight);
 }
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+/* Scroll progress + back to top */
+var prog = $("#prog"), totop = $("#totop");
+function onProg(){
+  var h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.setProperty("--p", h > 0 ? Math.min(1, scrollY / h) : 0);
+  totop.classList.toggle("show", scrollY > 900);
+}
+addEventListener("scroll", onProg, { passive: true }); onProg();
+
+/* Hero headline: split words for the reveal */
+(function(){
+  var h1 = $("h1"), i = 0;
+  function wrap(node){
+    [].slice.call(node.childNodes).forEach(function(n){
+      if (n.nodeType === 3){
+        var frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(function(part){
+          if (!part) return;
+          if (/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+          var w = document.createElement("span"); w.className = "w";
+          var s = document.createElement("span"); s.textContent = part; s.style.setProperty("--i", i++);
+          w.appendChild(s); frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) wrap(n);
+    });
+  }
+  h1.setAttribute("aria-label", h1.textContent); wrap(h1);
+  [].forEach.call(h1.querySelectorAll(".w"), function(w){ w.setAttribute("aria-hidden", "true"); });
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.documentElement.classList.add("loaded"); }); });
+})();
+
+/* Count-up stats */
+[].forEach.call(document.querySelectorAll(".stat b"), function(b){
+  var t = b.firstChild; if (!t || t.nodeType !== 3) return;
+  var n = parseInt(t.textContent, 10); if (isNaN(n) || reduce) return;
+  t.textContent = "0";
+  var so = new IntersectionObserver(function(es){
+    if (!es[0].isIntersecting) return; so.disconnect();
+    var t0 = performance.now();
+    (function f(now){
+      var k = Math.min(1, (now - t0) / 1200), e = 1 - Math.pow(1 - k, 3);
+      t.textContent = Math.round(n * e); if (k < 1) requestAnimationFrame(f);
+    })(t0);
+  }, { threshold: .6 });
+  so.observe(b);
+});
+
+/* Mouse spotlight on cards (mouse only) */
+if (fine && !reduce){
+  document.documentElement.classList.add("fine");
+  document.addEventListener("pointermove", function(e){
+    var c = e.target.closest && e.target.closest(".card"); if (!c) return;
+    var r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", (e.clientX - r.left) + "px"); c.style.setProperty("--my", (e.clientY - r.top) + "px");
+  }, { passive: true });
+}
 
 /* Local clock (Philippines) */
 function tick(){
