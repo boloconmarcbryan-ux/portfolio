@@ -466,11 +466,6 @@ html.lenis,html.lenis body{height:auto}
 
   <div class="strip rv" aria-label="Tools I use"><div class="strip-in" id="strip"></div></div>
 
-  <section class="brands rv" aria-label="Brands">
-    <span class="label"><i aria-hidden="true"></i>Brands I've edited for<i aria-hidden="true"></i></span>
-    <ul><li>Parfumoir</li><li>Glowie</li><li>SOLV</li><li>Elyvro</li><li>Herbala</li></ul>
-  </section>
-
   <section class="work" id="work">
     <div class="sec-head">
       <div class="rv">
@@ -1036,7 +1031,6 @@ gsap.fromTo(".a-photo img", { yPercent: -7, scale: 1.16 }, { yPercent: 7, scale:
 qa(".steps .num").forEach(function(n){
   gsap.fromTo(n, { y: 40 }, { y: -20, ease: "none", scrollTrigger: { trigger: n, start: "top bottom", end: "bottom top", scrub: true } });
 });
-gsap.from(".brands li", { y: 40, opacity: 0, duration: 1, ease: "power3.out", stagger: .08, scrollTrigger: { trigger: ".brands", start: "top 85%" } });
 gsap.from(".phone", { y: 80, rotate: -3, opacity: 0, duration: 1.3, ease: "power3.out", scrollTrigger: { trigger: ".case-in", start: "top 80%" } });
 
 /* Magnetic buttons */
