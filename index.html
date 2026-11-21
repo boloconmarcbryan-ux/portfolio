@@ -333,6 +333,64 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 .totop svg{width:18px;height:18px}
 @media (max-width:760px){.totop{display:none}}
 
+/* ==== Upgrade v2: GSAP + Lenis layer ==== */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+/* Intro loader */
+.loader{display:none}
+.intro .loader{display:flex;position:fixed;inset:0;z-index:200;background:#070708;flex-direction:column;justify-content:flex-end;padding:clamp(24px,5vw,64px);transition:transform 1s cubic-bezier(.76,0,.24,1)}
+.intro:not(.go) body{overflow:hidden}
+.loader.out{transform:translateY(-100%)}
+.ld-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.ld-name{font:500 clamp(64px,12vw,170px)/.85 var(--head);letter-spacing:-.02em}
+.ld-name em{color:var(--lime)}
+.ld-num{font:italic 500 clamp(64px,12vw,170px)/.85 var(--head);color:var(--lime);font-variant-numeric:tabular-nums}
+.ld-sub{margin-top:18px;font:500 11px var(--body);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.ld-bar{position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,#BF9C5E,#EBD6A6);transform-origin:left;transform:scaleX(var(--lp,0))}
+.intro:not(.go) h1 .w>span{transform:translateY(105%)!important}
+/* Cursor */
+.cursor{display:none}
+.cur-on .cursor{display:grid;place-items:center;position:fixed;left:0;top:0;z-index:150;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:1px solid var(--lime);pointer-events:none;transition:width .4s cubic-bezier(.2,.8,.2,1),height .4s cubic-bezier(.2,.8,.2,1),margin .4s cubic-bezier(.2,.8,.2,1),background .3s,opacity .3s}
+.cursor span{font:600 9.5px var(--body);letter-spacing:.2em;color:var(--on-lime);opacity:0;transition:opacity .2s}
+.cursor.big{width:92px;height:92px;margin:-46px 0 0 -46px;background:var(--lime)}
+.cursor.big span{opacity:1}
+.cursor.link{width:46px;height:46px;margin:-23px 0 0 -23px;background:rgba(205,174,114,.12)}
+.cursor.gone{opacity:0}
+/* Split heading words */
+.w2{display:inline-block;overflow:hidden;vertical-align:bottom;padding:0 .06em .1em 0;margin:0 -.06em -.1em 0}
+.w2>span{display:inline-block}
+/* Brands */
+.brands{padding-top:100px;text-align:center}
+.brands ul{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px clamp(28px,5vw,76px)}
+.brands li{font:500 clamp(32px,4.2vw,56px)/1 var(--head);color:var(--muted);transition:color .4s}
+.brands li:nth-child(even){font-style:italic}
+.brands li:hover{color:var(--gold2)}
+/* Case study */
+.case{padding-block:140px 0}
+.case-in{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,6vw,96px);align-items:start}
+.case-vid{position:sticky;top:110px;display:flex;justify-content:center}
+.phone{position:relative;height:min(calc(100vh - 150px),720px);aspect-ratio:9/16;max-width:100%;border-radius:30px;overflow:hidden;border:1px solid rgba(205,174,114,.4);background:#000;box-shadow:0 60px 120px -50px rgba(205,174,114,.35);cursor:pointer}
+.phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.phone::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent 30%);pointer-events:none}
+.phone-tag{position:absolute;left:18px;bottom:18px;z-index:2;font:italic 600 24px/1.1 var(--head)}
+.phone-tag small{display:block;font:500 10px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);margin-top:6px}
+.case-steps{list-style:none;margin:0;padding:0}
+.case-steps li{min-height:56vh;display:flex;flex-direction:column;justify-content:center;padding:32px 0;border-top:1px solid var(--line);opacity:.3;transition:opacity .6s}
+.case-steps li.on{opacity:1}
+.case-steps .cn{font:italic 500 76px/1 var(--head);color:transparent;-webkit-text-stroke:1px rgba(205,174,114,.55);transition:color .6s}
+.case-steps li.on .cn{color:var(--lime)}
+.case-steps h3{font-size:clamp(32px,3.6vw,48px);margin-top:14px}
+.case-steps p{color:var(--muted);max-width:46ch;margin:14px 0 18px;font-size:16.5px}
+.case-steps small{font:500 10.5px var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--gold2)}
+@media (max-width:860px){.case-in{grid-template-columns:1fr}.case-vid{position:relative;top:0}.phone{height:auto;width:min(100%,320px)}.case-steps li{min-height:0;opacity:1}}
+/* Big scroll-speed marquee */
+.bigmq{width:var(--vw,100vw);margin:140px 0 0 calc(50% - var(--vw,100vw) / 2);overflow:hidden;border-block:1px solid var(--line);padding:22px 0}
+.bm-row{display:flex;width:max-content;will-change:transform}
+.bm-row span{display:flex;align-items:center;gap:.4em;padding-right:.4em;font:italic 500 clamp(64px,10vw,150px)/1.05 var(--head);white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(205,174,114,.6)}
+.bm-row span b{font-weight:500;font-style:normal;color:var(--ink);-webkit-text-stroke:0}
+.bm-row .dm{width:.16em;height:.16em;background:var(--lime);transform:rotate(45deg);flex:none}
+
 /* Reveal */
 .js .rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
 .js .rv.in{opacity:1;transform:none}
@@ -344,9 +402,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   .grain{display:none}
 }
 </style>
-<script>document.documentElement.classList.add("js")</script>
+<script>(function(d){d.classList.add("js");var r=matchMedia("(prefers-reduced-motion: reduce)").matches,s=null;try{s=sessionStorage.getItem("intro")}catch(e){}if(!r&&!s){d.classList.add("intro");setTimeout(function(){d.classList.add("go");d.classList.remove("intro")},5000)}})(document.documentElement)</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 </head>
 <body>
+<div class="loader" id="loader" aria-hidden="true"><i class="ld-bar"></i><div class="ld-row"><span class="ld-name">Marc<em>.</em></span><span class="ld-num" id="ldNum">0</span></div><span class="ld-sub">AI &amp; Meta Ads Editor · Portfolio 2026</span></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span id="curTxt">SOUND</span></div>
 <a class="skip" href="#work">Skip to work</a>
 <div class="prog" id="prog" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -356,6 +419,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <a class="brand" href="#top"><b>M</b>Marc<span>AI &amp; Meta Ads Editor</span></a>
     <nav class="links" aria-label="Sections">
       <a href="#work">Work</a>
+      <a href="#case">Case study</a>
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#about">About</a>
@@ -365,7 +429,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><i></i><i></i></button>
   </div>
   <nav class="sheet" id="sheet" aria-label="Menu">
-    <a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a><a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+    <a href="#work">Work</a><a href="#case">Case study</a><a href="#services">Services</a><a href="#process">Process</a><a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
   </nav>
 </header>
 
@@ -402,6 +466,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
   <div class="strip rv" aria-label="Tools I use"><div class="strip-in" id="strip"></div></div>
 
+  <section class="brands rv" aria-label="Brands">
+    <span class="label"><i aria-hidden="true"></i>Brands I've edited for<i aria-hidden="true"></i></span>
+    <ul><li>Parfumoir</li><li>Glowie</li><li>SOLV</li><li>Elyvro</li><li>Herbala</li></ul>
+  </section>
+
   <section class="work" id="work">
     <div class="sec-head">
       <div class="rv">
@@ -416,6 +485,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       </div>
     </div>
     <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="case" id="case">
+    <div class="sec-head rv">
+      <div>
+        <span class="label"><i aria-hidden="true"></i>Case study</span>
+        <h2 style="margin-top:12px">From brief to a <em>finished song ad</em></h2>
+        <p>How a fully AI-produced song ad comes together, start to finish. Tap the video to hear it.</p>
+      </div>
+    </div>
+    <div class="case-in">
+      <div class="case-vid">
+        <div class="phone" id="casePhone" role="button" tabindex="0" aria-label="Play case study ad with sound">
+          <video id="caseVid" muted loop playsinline preload="none" poster="media/ai-song-1.jpg"></video>
+          <button class="sound" id="caseSnd" type="button" aria-label="Turn sound on" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="wv" d="M22 9l-6 6M16 9l6 6"/></svg></button>
+          <span class="phone-tag">AI Song Ad<small>Pixar-style · Danish</small></span>
+        </div>
+      </div>
+      <ol class="case-steps" id="caseSteps">
+        <li><span class="cn">01</span><h3>Brief &amp; lyrics</h3><p>The product, the audience and the one message the ad has to land. Then lyrics written to sound native in Danish, not translated.</p><small>Script · Lyrics · Voice</small></li>
+        <li><span class="cn">02</span><h3>Characters &amp; frames</h3><p>Pixar-style characters and start frames built around the real product, checked against the actual label.</p><small>Google Flow · Higgsfield</small></li>
+        <li><span class="cn">03</span><h3>AI animation</h3><p>Every shot animated to the beat, with its own motion prompt. Anything that drifts from the product gets redone.</p><small>Kling · Seedance · Veo</small></li>
+        <li><span class="cn">04</span><h3>The final edit</h3><p>Cut to the song, captions in the brand's style, and a hook that lands in the first two seconds.</p><small>CapCut</small></li>
+      </ol>
+    </div>
   </section>
 
   <section class="services" id="services">
@@ -446,6 +540,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       </div>
     </div>
   </section>
+
+  <div class="bigmq" aria-hidden="true"><div class="bm-row" id="bm"><span><b>Meta Ads</b><i class="dm"></i>AI Ads<i class="dm"></i><b>Song Ads</b><i class="dm"></i>Six Languages<i class="dm"></i></span><span><b>Meta Ads</b><i class="dm"></i>AI Ads<i class="dm"></i><b>Song Ads</b><i class="dm"></i>Six Languages<i class="dm"></i></span></div></div>
 
   <section class="process" id="process">
     <div class="sec-head rv">
@@ -795,6 +891,163 @@ function tick(){
 }
 tick(); setInterval(tick, 30000);
 })();
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+var q = function(s){ return document.querySelector(s); };
+var qa = function(s){ return [].slice.call(document.querySelectorAll(s)); };
+var html = document.documentElement;
+var REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches && !/motion=1/.test(location.search);
+var FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
+var lenis = null;
+
+/* Intro loader: counts to 100, then the curtain lifts and the headline rises */
+if (html.classList.contains("intro")){
+  try { sessionStorage.setItem("intro", "1"); } catch(e){}
+  var ld = q("#loader"), ln = q("#ldNum"), t0 = performance.now();
+  (function f(now){
+    var k = Math.min(1, (now - t0) / 1500), e = 1 - Math.pow(1 - k, 3);
+    ln.textContent = Math.round(e * 100); ld.style.setProperty("--lp", e);
+    if (k < 1) return requestAnimationFrame(f);
+    setTimeout(function(){
+      html.classList.add("go"); ld.classList.add("out");
+      if (lenis) lenis.start();
+      setTimeout(function(){ html.classList.remove("intro"); }, 1100);
+    }, 180);
+  })(t0);
+}
+
+/* Case study: autoplay muted when on screen, tap for sound, active step */
+var cv = q("#caseVid"), cp = q("#casePhone"), cs = q("#caseSnd");
+function caseSound(on){
+  if (!cv.src) cv.src = "media/ai-song-1.mp4";
+  if (on){ qa("video").forEach(function(v){ if (v !== cv) v.muted = true; }); qa(".vcard.snd").forEach(function(c){ c.classList.remove("snd"); }); cv.currentTime = 0; }
+  cv.muted = !on;
+  var p = cv.play(); if (p && p.catch) p.catch(function(){});
+  cs.querySelector(".wv").setAttribute("d", on ? "M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" : "M22 9l-6 6M16 9l6 6");
+  cp.setAttribute("aria-label", on ? "Mute case study ad" : "Play case study ad with sound");
+}
+cp.addEventListener("click", function(){ caseSound(cv.muted); });
+cp.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); caseSound(cv.muted); } });
+document.addEventListener("click", function(e){ if (!cp.contains(e.target) && e.target.closest && e.target.closest(".vcard,.reel-screen,.sound") && !cv.muted) caseSound(false); }, true);
+if ("IntersectionObserver" in window){
+  new IntersectionObserver(function(es){
+    if (es[0].isIntersecting){ if (!cv.src) cv.src = "media/ai-song-1.mp4"; var p = cv.play(); if (p && p.catch) p.catch(function(){}); }
+    else cv.pause();
+  }, { threshold: .3 }).observe(cp);
+  var steps = qa("#caseSteps li");
+  var sio = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting) steps.forEach(function(s){ s.classList.toggle("on", s === e.target); }); });
+  }, { rootMargin: "-45% 0px -45% 0px" });
+  steps.forEach(function(s){ sio.observe(s); });
+  steps[0].classList.add("on");
+}
+
+/* Big marquee: drifts on its own, speeds up and flips with your scroll */
+function setVw(){ html.style.setProperty("--vw", html.clientWidth + "px"); }
+setVw(); addEventListener("resize", setVw);
+var bm = q("#bm");
+if (bm && !REDUCE){
+  var bx = 0, lastY = scrollY, dir = 1, boost = 0;
+  (function loop(){
+    var y = scrollY, d = y - lastY; lastY = y;
+    if (d) dir = d > 0 ? 1 : -1;
+    boost += (Math.min(Math.abs(d), 120) * .18 - boost) * .12;
+    var br = bm.getBoundingClientRect();
+    if (br.bottom > 0 && br.top < innerHeight){
+      var w = bm.scrollWidth / 2;
+      bx -= (.7 + boost) * dir;
+      if (bx <= -w) bx += w; if (bx > 0) bx -= w;
+      bm.style.transform = "translate3d(" + bx + "px,0,0)";
+    }
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* Custom cursor (mouse only) */
+if (FINE && !REDUCE){
+  html.classList.add("cur-on");
+  var cur = q("#cursor"), ct = q("#curTxt"), mx = -100, my = -100, cx = -100, cy = -100;
+  addEventListener("pointermove", function(e){
+    mx = e.clientX; my = e.clientY; cur.classList.remove("gone");
+    var t = e.target, vid = t.closest && t.closest(".vcard,.reel-screen,.phone");
+    var lnk = t.closest && t.closest("a,button,summary,[role=tab]");
+    if (vid && !t.closest(".xbtn")){
+      var on = vid.classList.contains("vcard") ? vid.classList.contains("snd") : vid.classList.contains("phone") ? !q("#caseVid").muted : !q("#reelVid").muted;
+      ct.textContent = on ? "MUTE" : "SOUND"; cur.className = "cursor big";
+    } else cur.className = lnk ? "cursor link" : "cursor";
+  }, { passive: true });
+  document.addEventListener("mouseleave", function(){ cur.classList.add("gone"); });
+  (function loop(){
+    cx += (mx - cx) * .2; cy += (my - cy) * .2;
+    cur.style.transform = "translate3d(" + cx + "px," + cy + "px,0)";
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* GSAP + ScrollTrigger + Lenis */
+if (REDUCE || !window.gsap || !window.ScrollTrigger) return;
+gsap.registerPlugin(ScrollTrigger);
+
+if (window.Lenis){
+  lenis = new Lenis({ lerp: .09, smoothWheel: true });
+  window.__lenis = lenis;
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
+  gsap.ticker.lagSmoothing(0);
+  if (html.classList.contains("intro") && !html.classList.contains("go")) lenis.stop();
+  qa('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      var id = a.getAttribute("href"), el = id === "#top" ? 0 : q(id);
+      if (el === null) return;
+      e.preventDefault(); lenis.scrollTo(el, { offset: id === "#top" ? 0 : -90, duration: 1.4 });
+    });
+  });
+  var modal = q("#modal");
+  new MutationObserver(function(){ if (modal.classList.contains("on")) lenis.stop(); else lenis.start(); })
+    .observe(modal, { attributes: true, attributeFilter: ["class"] });
+}
+
+/* Section headings rise word by word */
+qa("main h2").forEach(function(h){
+  h.setAttribute("aria-label", h.textContent);
+  (function wrap(node){
+    [].slice.call(node.childNodes).forEach(function(n){
+      if (n.nodeType === 3){
+        var frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(function(part){
+          if (!part) return;
+          if (/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }
+          var w = document.createElement("span"); w.className = "w2"; w.setAttribute("aria-hidden", "true");
+          var s = document.createElement("span"); s.textContent = part; w.appendChild(s); frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) wrap(n);
+    });
+  })(h);
+  gsap.from(h.querySelectorAll(".w2>span"), { yPercent: 115, rotate: 4, duration: 1.15, ease: "power4.out", stagger: .07,
+    scrollTrigger: { trigger: h, start: "top 88%" } });
+});
+
+/* Parallax */
+gsap.to("#reelVid", { scale: 1.16, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+gsap.fromTo(".a-photo img", { yPercent: -7, scale: 1.16 }, { yPercent: 7, scale: 1.16, ease: "none",
+  scrollTrigger: { trigger: ".a-photo", start: "top bottom", end: "bottom top", scrub: true } });
+qa(".steps .num").forEach(function(n){
+  gsap.fromTo(n, { y: 40 }, { y: -20, ease: "none", scrollTrigger: { trigger: n, start: "top bottom", end: "bottom top", scrub: true } });
+});
+gsap.from(".brands li", { y: 40, opacity: 0, duration: 1, ease: "power3.out", stagger: .08, scrollTrigger: { trigger: ".brands", start: "top 85%" } });
+gsap.from(".phone", { y: 80, rotate: -3, opacity: 0, duration: 1.3, ease: "power3.out", scrollTrigger: { trigger: ".case-in", start: "top 80%" } });
+
+/* Magnetic buttons */
+if (FINE) qa(".btn.primary, .sound").forEach(function(b){
+  var xTo = gsap.quickTo(b, "x", { duration: .5, ease: "power3" }), yTo = gsap.quickTo(b, "y", { duration: .5, ease: "power3" });
+  b.addEventListener("pointermove", function(e){ var r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * .3); yTo((e.clientY - r.top - r.height / 2) * .4); });
+  b.addEventListener("pointerleave", function(){ xTo(0); yTo(0); });
+});
+
+addEventListener("load", function(){ ScrollTrigger.refresh(); });
+});
 </script>
 </body>
 </html>
